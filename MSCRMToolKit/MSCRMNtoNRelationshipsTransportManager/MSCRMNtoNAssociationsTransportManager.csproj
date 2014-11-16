@@ -46,7 +46,7 @@
     </Reference>
     <Reference Include="MSCRMConnectionsManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\MSCRMConnectionsManager\MSCRMConnectionsManager\bin\Debug\MSCRMConnectionsManager.dll</HintPath>
+      <HintPath>..\MSCRMToolKit\lib\MSCRMConnectionsManager.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />

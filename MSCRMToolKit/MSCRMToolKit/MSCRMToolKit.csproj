@@ -62,7 +62,7 @@
     </Reference>
     <Reference Include="MSCRMConnectionsManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\MSCRMConnectionsManager\MSCRMConnectionsManager\bin\Debug\MSCRMConnectionsManager.dll</HintPath>
+      <HintPath>lib\MSCRMConnectionsManager.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -320,6 +320,7 @@
     <Content Include="lib\microsoft.office.interop.visio.dll" />
     <Content Include="lib\Microsoft.Xrm.Sdk.Deployment.dll" />
     <Content Include="lib\Microsoft.Xrm.Sdk.dll" />
+    <Content Include="lib\MSCRMConnectionsManager.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MSCRMAuditExportManager\MSCRMAuditExportManager.csproj">
