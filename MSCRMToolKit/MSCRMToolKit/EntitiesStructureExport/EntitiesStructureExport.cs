@@ -46,10 +46,15 @@ namespace MSCRMToolKit
 
         // Diagram generation variables****************************************
         private BackgroundWorker bwDiagramsGenerator = new BackgroundWorker();
-
         private List<string> DGentities = new List<string>();
         private string DGconnectionName = "";
         private bool DiagramGeneratedSuccesfully = false;
+        private int selectedDiagramsEntityLabelIndex = 0;
+        private int selectedDiagramsAttributeLabelIndex = 0;
+        private bool showForeignKeys = true;
+        private bool showPrimaryKeys = true;
+        private bool showRelationshipsNames = false;
+        private bool showOwnership = false;
         // Diagram generation variables****************************************
 
         /// <summary>
@@ -71,6 +76,11 @@ namespace MSCRMToolKit
             bwDiagramsGenerator.DoWork += new DoWorkEventHandler(bwGenerateGiagrams_DoWork);
             bwDiagramsGenerator.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(bwGenerateGiagrams_ProgressChanged);
             bwDiagramsGenerator.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwGenerateGiagrams_RunWorkerCompleted);
+            comboBoxDiagramEntitiesLabels.SelectedIndex = 0;
+            comboBoxDiagramAttributesLabels.SelectedIndex = 0;
+            checkBoxDiagramShowOwnership.Checked = false;
+            checkBoxShowForeignKeys.Checked = true;
+            checkBoxShowPrimaryKeys.Checked = true;
         }
 
         private void comboBoxSource_SelectedIndexChanged(object sender, EventArgs e)
@@ -413,13 +423,13 @@ namespace MSCRMToolKit
                                             metadataWriter.WriteElementString("AttributeIsCustom", currentAttribute.IsCustomAttribute.Value.ToString());
                                         if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsCustomizable"].Checked)
                                             metadataWriter.WriteElementString("AttributeIsCustomizable", currentAttribute.IsCustomizable.Value.ToString());
-                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeRequiredLevel"].Checked)
+                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeRequiredLevel"].Checked && currentAttribute.RequiredLevel != null)
                                             metadataWriter.WriteElementString("AttributeRequiredLevel", currentAttribute.RequiredLevel.Value.ToString());
-                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsValidForCreate"].Checked)
+                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsValidForCreate"].Checked && currentAttribute.IsValidForCreate != null)
                                             metadataWriter.WriteElementString("AttributeIsValidForCreate", currentAttribute.IsValidForCreate.Value.ToString());
                                         if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsValidForRead"].Checked)
                                             metadataWriter.WriteElementString("AttributeIsValidForRead", currentAttribute.IsValidForRead.Value.ToString());
-                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsValidForUpdate"].Checked)
+                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsValidForUpdate"].Checked && currentAttribute.IsValidForUpdate != null)
                                             metadataWriter.WriteElementString("AttributeIsValidForUpdate", currentAttribute.IsValidForUpdate.Value.ToString());
                                         if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsAuditEnabled"].Checked)
                                             metadataWriter.WriteElementString("AttributeIsAuditEnabled", currentAttribute.IsAuditEnabled.Value.ToString());
@@ -427,11 +437,11 @@ namespace MSCRMToolKit
                                             metadataWriter.WriteElementString("AttributeIsManaged", currentAttribute.IsManaged.Value.ToString());
                                         if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsPrimaryId"].Checked)
                                             metadataWriter.WriteElementString("AttributeIsPrimaryId", currentAttribute.IsPrimaryId.Value.ToString());
-                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsPrimaryName"].Checked)
+                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsPrimaryName"].Checked && currentAttribute.IsPrimaryName != null)
                                             metadataWriter.WriteElementString("AttributeIsPrimaryName", currentAttribute.IsPrimaryName.Value.ToString());
                                         if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsRenameable"].Checked)
                                             metadataWriter.WriteElementString("AttributeIsRenameable", currentAttribute.IsRenameable.Value.ToString());
-                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsValidForAdvancedFind"].Checked)
+                                        if (treeViewExport.Nodes["NodeExportAttributesMetaData"].Nodes["NodeAttributeIsValidForAdvancedFind"].Checked && currentAttribute.IsValidForAdvancedFind != null)
                                             metadataWriter.WriteElementString("AttributeIsValidForAdvancedFind", currentAttribute.IsValidForAdvancedFind.Value.ToString());
 
                                         string MinimumValue = "";
@@ -916,6 +926,13 @@ namespace MSCRMToolKit
             DGconnectionName = comboBoxSource.SelectedItem.ToString();
             this.toolStripProgressBar1.Visible = true;
 
+            selectedDiagramsEntityLabelIndex = comboBoxDiagramEntitiesLabels.SelectedIndex;
+            selectedDiagramsAttributeLabelIndex = comboBoxDiagramAttributesLabels.SelectedIndex;
+            showForeignKeys = checkBoxShowForeignKeys.Checked;
+            showPrimaryKeys = checkBoxShowPrimaryKeys.Checked;
+            showRelationshipsNames = checkBoxShowRelationshipsNames.Checked;
+            showOwnership = checkBoxDiagramShowOwnership.Checked;
+
             try
             {
                 if (bwDiagramsGenerator.IsBusy != true)
@@ -950,13 +967,24 @@ namespace MSCRMToolKit
         private void bwGenerateGiagrams_DoWork(object sender, DoWorkEventArgs e)
         {
             //transportStopped = false;
-            BackgroundWorker worker = sender as BackgroundWorker;
+            BackgroundWorker worker = sender as BackgroundWorker;          
 
             //Generate Diagrams
             DiagramBuilder db = new DiagramBuilder();
             try
             {
-                string filename = db.GenerateDiagram(DGconnectionName, DGentities, environmentStructure, worker, e);
+                DiagramBuildingProperties dbp = new DiagramBuildingProperties();
+                dbp.connectionName = DGconnectionName;
+                dbp.entities = DGentities;
+                dbp.environmentStructure = environmentStructure;
+                dbp.entityLabelDisplay = selectedDiagramsEntityLabelIndex;
+                dbp.attributeLabelDisplay = selectedDiagramsAttributeLabelIndex;
+                dbp.showForeignKeys = showForeignKeys;
+                dbp.showPrimaryKeys = showPrimaryKeys;
+                dbp.showRelationshipsNames = showRelationshipsNames;
+                dbp.showOwnership = showOwnership;
+
+                string filename = db.GenerateDiagram(dbp, worker, e);
                 DiagramGeneratedSuccesfully = true;
             }
             catch (FaultException<Microsoft.Xrm.Sdk.OrganizationServiceFault> ex)

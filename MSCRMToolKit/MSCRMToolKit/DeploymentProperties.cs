@@ -112,13 +112,13 @@ namespace MSCRMToolKit
 
                 // Print out the number of servers and the user list.
                 string licenseanduserinformation = "Number of servers: ";
-                licenseanduserinformation += licenseResponse.NumberOfServers.HasValue ? licenseResponse.NumberOfServers.Value.ToString() : "null";
-                licenseanduserinformation += "\r\n";
-                licenseanduserinformation += "Users:\r\n";
-                foreach (String user in licenseResponse.UsersList)
-                {
-                    licenseanduserinformation += user + "\r\n";
-                }
+                //licenseanduserinformation += licenseResponse.NumberOfServers.HasValue ? licenseResponse.NumberOfServers.Value.ToString() : "null";
+                //licenseanduserinformation += "\r\n";
+                //licenseanduserinformation += "Users:\r\n";
+                //foreach (String user in licenseResponse.UsersList)
+                //{
+                //    licenseanduserinformation += user + "\r\n";
+                //}
                 textBoxLicenceanduserinformation.Text = licenseanduserinformation;
 
                 // Retrieve server settings for your organization.

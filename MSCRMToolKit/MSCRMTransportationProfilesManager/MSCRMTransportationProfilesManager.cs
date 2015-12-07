@@ -259,7 +259,8 @@ namespace MSCRMToolKit
                     "sdkmessageprocessingstep",
                     "sdkmessageprocessingstepimage",
                     "sdkmessageprocessingstepsecureconfig",
-                    "workflow"
+                    "workflow",
+                    "channelaccessprofile"
                 };
 
                 List<string> IgnoredAttributes = new List<string> { "importsequencenumber",
@@ -267,13 +268,16 @@ namespace MSCRMToolKit
                                                                     "timezoneruleversionnumber",
                                                                     "utcconversiontimezonecode",
                                                                     "overriddencreatedon",
-                                                                    "ownerid"
+                                                                    "ownerid",
+                                                                    "haveprivilegeschanged"
                 };
 
                 foreach (EntityMetadata currentEntity in EMD)
                 {
-                    if (currentEntity.IsIntersect.Value == false &&
-                        IgnoredEntities.IndexOf(currentEntity.LogicalName) < 0 &&
+                    if (currentEntity.LogicalName == "externalpartyitem")
+                        AdditionalEntities.Add(currentEntity.LogicalName);
+                    if (IgnoredEntities.IndexOf(currentEntity.LogicalName) < 0 && 
+                        currentEntity.IsIntersect.Value == false &&                        
                         (currentEntity.IsValidForAdvancedFind.Value || AdditionalEntities.IndexOf(currentEntity.LogicalName) >= 0)
                        )
                     {
@@ -286,9 +290,11 @@ namespace MSCRMToolKit
                         {
                             // Only write out main attributes enabled for reading and creation.
                             if ((currentAttribute.AttributeOf == null) &&
+                                IgnoredAttributes.IndexOf(currentAttribute.LogicalName) < 0 &&
+                                currentAttribute.IsValidForRead != null &&
                                 currentAttribute.IsValidForRead.Value &&
-                                currentAttribute.IsValidForCreate.Value &&
-                                IgnoredAttributes.IndexOf(currentAttribute.LogicalName) < 0)
+                                currentAttribute.IsValidForCreate != null &&
+                                currentAttribute.IsValidForCreate.Value)
                             {
                                 ee.Attributes.Add(currentAttribute.LogicalName);
                             }
@@ -524,29 +530,30 @@ namespace MSCRMToolKit
         public void WriteNewImportFailureLine(ImportFailure failure, string importFailuresReportFileName)
         {
             bool reportExists = File.Exists(importFailuresReportFileName);
-            using (FileStream fs = new FileStream(importFailuresReportFileName, FileMode.OpenOrCreate))
-            using (FileStream writer = new FileStream(importFailuresReportFileName, FileMode.Create))
+            List<ImportFailure> failures = new List<ImportFailure>();
+            if (reportExists)
             {
-                DataContractSerializer ser = new DataContractSerializer(typeof(List<ImportFailure>));
-                List<ImportFailure> failures = new List<ImportFailure>();
-                if (!reportExists)
-                {
-                    failures = new List<ImportFailure>();
-                }
-                else
+                using (FileStream fs = new FileStream(importFailuresReportFileName, FileMode.OpenOrCreate))
                 {
                     XmlDictionaryReaderQuotas XRQ = new XmlDictionaryReaderQuotas();
                     XRQ.MaxStringContentLength = int.MaxValue;
                     XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, XRQ);
+                    DataContractSerializer ser = new DataContractSerializer(typeof(List<ImportFailure>));
                     failures = (List<ImportFailure>)ser.ReadObject(reader, true);
                     reader.Close();
-                }
-                failures.Add(failure);
+                    fs.Close();
 
-                //Write updated failures report                
-                ser.WriteObject(writer, failures);
+                }
             }
 
+            using (FileStream writer = new FileStream(importFailuresReportFileName, FileMode.OpenOrCreate))
+            {
+                failures.Add(failure);
+                DataContractSerializer ser = new DataContractSerializer(typeof(List<ImportFailure>));
+                //Write updated failures report                
+                ser.WriteObject(writer, failures);
+                writer.Close();
+            }
             
         }
 

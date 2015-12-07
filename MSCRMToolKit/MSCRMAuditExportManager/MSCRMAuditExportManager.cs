@@ -637,7 +637,8 @@ namespace MSCRMToolKit
                     "sdkmessageprocessingstep",
                     "sdkmessageprocessingstepimage",
                     "sdkmessageprocessingstepsecureconfig",
-                    "workflow"
+                    "workflow",
+                    "channelaccessprofile"
                 };
 
                 List<string> IgnoredAttributes = new List<string> { "importsequencenumber",
@@ -645,7 +646,8 @@ namespace MSCRMToolKit
                                                                     "timezoneruleversionnumber",
                                                                     "utcconversiontimezonecode",
                                                                     "overriddencreatedon",
-                                                                    "ownerid"
+                                                                    "ownerid",
+                                                                    "haveprivilegeschanged"
                 };
 
                 foreach (EntityMetadata currentEntity in EMD)
@@ -671,9 +673,10 @@ namespace MSCRMToolKit
 
                         // Only write out main attributes enabled for reading and creation.
                         if ((currentAttribute.AttributeOf == null) &&
+                            IgnoredAttributes.IndexOf(currentAttribute.LogicalName) < 0 &&
                             currentAttribute.IsValidForRead.Value &&
-                            currentAttribute.IsValidForCreate.Value &&
-                            IgnoredAttributes.IndexOf(currentAttribute.LogicalName) < 0)
+                            currentAttribute.IsValidForCreate.Value
+                            )
                         {
                             ee.Attributes.Add(currentAttribute.LogicalName);
                         }

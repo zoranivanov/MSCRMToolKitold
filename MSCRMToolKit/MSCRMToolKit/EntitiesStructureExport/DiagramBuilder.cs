@@ -34,6 +34,8 @@ namespace MSCRMToolKit
         private RetrieveAllEntitiesResponse _metadataResponse;
         private ArrayList _processedRelationships;
         private List<string> selectedEntitiesNames;
+        private List<ProcessedEntity> _processedEntities = new List<ProcessedEntity>();
+        private DiagramBuildingProperties dbp = new DiagramBuildingProperties();
 
         private const double X_POS1 = 0;
         private const double Y_POS1 = 0;
@@ -52,7 +54,9 @@ namespace MSCRMToolKit
         private const double ROUNDING = 0.0625;
         private const double HEIGHT = 0.25;
         private const short NAME_CHARACTER_SIZE = 12;
+        const short FONT_STYLE = 225;  
         private const short VISIO_SECTION_OJBECT_INDEX = 1;
+        String VersionName;
 
         public DiagramBuilder()
         {
@@ -62,13 +66,12 @@ namespace MSCRMToolKit
         /// <summary>
         /// Main entry point for the application.
         /// </summary>
-        /// <param name="connectionName">Name of the connection.</param>
-        /// <param name="entities">The entities.</param>
-        /// <param name="response">The response.</param>
+        /// <param name="dbp">The Diagram Buildin g Properties.</param>
         /// <param name="worker">The worker.</param>
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         /// <returns></returns>
-        public string GenerateDiagram(string connectionName, List<string> entities, RetrieveAllEntitiesResponse response, BackgroundWorker worker, DoWorkEventArgs e)
+        //public string GenerateDiagram(string connectionName, List<string> entities, RetrieveAllEntitiesResponse response, int selectedDiagramEntityLabelIndex, BackgroundWorker worker, DoWorkEventArgs e)
+        public string GenerateDiagram(DiagramBuildingProperties dbp, BackgroundWorker worker, DoWorkEventArgs e)
         {
             String filename = String.Empty;
             VisioApi.Application application;
@@ -80,17 +83,19 @@ namespace MSCRMToolKit
                 // Load Visio and create a new document.
                 application = new VisioApi.Application();
                 application.Visible = false; // Not showing the UI increases rendering speed
+                builder.VersionName = application.Version;
                 document = application.Documents.Add(String.Empty);
 
                 builder._application = application;
                 builder._document = document;
 
-                builder._metadataResponse = response;
-                builder.selectedEntitiesNames = entities;
+                builder._metadataResponse = dbp.environmentStructure;
+                builder.selectedEntitiesNames = dbp.entities;
+                builder.dbp = dbp;
 
                 // Diagram all entities if given no command-line parameters, otherwise diagram
                 // those entered as command-line parameters.
-                builder.BuildDiagram(entities, String.Join(", ", entities), worker, e);
+                builder.BuildDiagram(dbp.entities, worker, e);
                 filename = "EntitesStructure\\Diagrams.vsd";
 
                 // Save the diagram in the current directory using the name of the first
@@ -115,14 +120,13 @@ namespace MSCRMToolKit
         /// by the passed-in array of entities.
         /// </summary>
         /// <param name="entities">Core entities for the diagram</param>
-        /// <param name="pageTitle">Page title</param>
         /// <param name="worker">The worker.</param>
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
-        private void BuildDiagram(List<string> entities, string pageTitle, BackgroundWorker worker, DoWorkEventArgs e)
+        private void BuildDiagram(List<string> entities, BackgroundWorker worker, DoWorkEventArgs e)
         {
             // Get the default page of our new document
             VisioApi.Page page = _document.Pages[1];
-            page.Name = pageTitle;
+            page.Name = "MSCRMToolKit generated diagram";
             int cptEntititesTreated = 0;
 
             // Get the metadata for each passed-in entity, draw it, and draw its relationships.
@@ -148,7 +152,7 @@ namespace MSCRMToolKit
                 }
                 catch (System.Runtime.InteropServices.COMException)
                 {
-                    rect = DrawEntityRectangle(page, entity.LogicalName, entity.OwnershipType.Value);
+                    rect = DrawEntityRectangle(page, entity);
                 }
 
                 // Draw all relationships TO this entity.
@@ -158,7 +162,7 @@ namespace MSCRMToolKit
                 // Draw all relationshipos FROM this entity
                 DrawRelationships(entity, rect, entity.OneToManyRelationships, true, worker, e);
             }
-
+            
             // Arrange the shapes to fit the page.
             page.Layout();
             page.ResizeToFitContents();
@@ -247,56 +251,47 @@ namespace MSCRMToolKit
                             String.Compare(entity.LogicalName, "businessunit", true) != 0)
                         {
                             // Either find or create a shape that represents this secondary entity, and add the name of
-                            // the involved attribute to the shape's text.
+                            // the involved attribute to the shape's text.                            
                             try
                             {
                                 rect2 = rect.ContainingPage.Shapes.get_ItemU(entity2.LogicalName);
-
-                                if (rect2.Text.IndexOf(attribute2.LogicalName) == -1)
+                                int processedEntity2Index = _processedEntities.FindIndex(pe => pe.entityName == entity2.LogicalName);
+                                if (!_processedEntities[processedEntity2Index].attributes.Exists(a => a == attribute2.LogicalName) && dbp.showForeignKeys)
                                 {
                                     rect2.get_CellsSRC(VISIO_SECTION_OJBECT_INDEX, (short)VisioApi.VisRowIndices.visRowXFormOut, (short)VisioApi.VisCellIndices.visXFormHeight).ResultIU += 0.25;
-                                    rect2.Text += "\n" + attribute2.LogicalName;
+                                    rect2.Text += getAttributeValue(attribute2);
+                                    _processedEntities[processedEntity2Index].attributes.Add(attribute2.LogicalName);
 
-                                    // If the attribute is a primary key for the entity, append a [PK] label to the attribute name to indicate this.
-                                    if (String.Compare(entity2.PrimaryIdAttribute, attribute2.LogicalName) == 0)
-                                    {
-                                        rect2.Text += "  [PK]";
-                                    }
                                 }
                             }
                             catch (System.Runtime.InteropServices.COMException)
                             {
-                                rect2 = DrawEntityRectangle(rect.ContainingPage, entity2.LogicalName, entity2.OwnershipType.Value);
-                                rect2.Text += "\n" + attribute2.LogicalName;
-
-                                // If the attribute is a primary key for the entity, append a [PK] label to the attribute name to indicate so.
-                                if (String.Compare(entity2.PrimaryIdAttribute, attribute2.LogicalName) == 0)
+                                rect2 = DrawEntityRectangle(rect.ContainingPage, entity2);
+                                int processedEntity2Index = _processedEntities.FindIndex(pe => pe.entityName == entity2.LogicalName);
+                                if (!_processedEntities[processedEntity2Index].attributes.Exists(a => a == attribute2.LogicalName) && dbp.showForeignKeys)
                                 {
-                                    rect2.Text += "  [PK]";
+                                    rect2.Text += getAttributeValue(attribute2);                                    
+                                    _processedEntities[processedEntity2Index].attributes.Add(attribute2.LogicalName);
                                 }
                             }
 
                             // Add the name of the involved attribute to the core entity's text, if not already present.
-                            if (rect.Text.IndexOf(attribute.LogicalName) == -1)
+                            int processedEntityIndex = _processedEntities.FindIndex(pe => pe.entityName == entity.LogicalName);
+                            if (!_processedEntities[processedEntityIndex].attributes.Exists(a => a == attribute.LogicalName) && dbp.showForeignKeys)
                             {
                                 rect.get_CellsSRC(VISIO_SECTION_OJBECT_INDEX, (short)VisioApi.VisRowIndices.visRowXFormOut, (short)VisioApi.VisCellIndices.visXFormHeight).ResultIU += HEIGHT;
-                                rect.Text += "\n" + attribute.LogicalName;
-
-                                // If the attribute is a primary key for the entity, append a [PK] label to the attribute name to indicate so.
-                                if (String.Compare(entity.PrimaryIdAttribute, attribute.LogicalName) == 0)
-                                {
-                                    rect.Text += "  [PK]";
-                                }
+                                rect.Text += getAttributeValue(attribute);
+                                _processedEntities[processedEntityIndex].attributes.Add(attribute.LogicalName);
                             }
-
+                            
                             // Draw the directional, dynamic connector between the two entity shapes.
                             if (areReferencingRelationships)
                             {
-                                DrawDirectionalDynamicConnector(rect, rect2, isManyToMany);
+                                DrawDirectionalDynamicConnector(rect, rect2, isManyToMany, entityRelationship.SchemaName);
                             }
                             else
                             {
-                                DrawDirectionalDynamicConnector(rect2, rect, isManyToMany);
+                                DrawDirectionalDynamicConnector(rect2, rect, isManyToMany, entityRelationship.SchemaName);
                             }
                         }
                     }
@@ -304,48 +299,81 @@ namespace MSCRMToolKit
             }
         }
 
+        private string getAttributeValue(AttributeMetadata attribute)
+        {
+            string displayName = "";
+            if (attribute.DisplayName != null && attribute.DisplayName.UserLocalizedLabel != null)
+                displayName = attribute.DisplayName.UserLocalizedLabel.Label;
+            if (dbp.attributeLabelDisplay == 1)
+                return "\n" + displayName;
+            else if (dbp.attributeLabelDisplay == 2)
+                return "\n" + displayName + " [" + attribute.LogicalName + "]";
+            else
+                return "\n" + attribute.LogicalName;
+        }
+
         /// <summary>
         /// Draw an "Entity" Rectangle
         /// </summary>
         /// <param name="page">The Page on which to draw</param>
-        /// <param name="entityName">The name of the entity</param>
-        /// <param name="ownership">The ownership type of the entity</param>
+        /// <param name="entity">The entity to draw</param>
         /// <returns>The newly drawn rectangle</returns>
-        private VisioApi.Shape DrawEntityRectangle(VisioApi.Page page, string entityName, OwnershipTypes ownership)
+        private VisioApi.Shape DrawEntityRectangle(VisioApi.Page page, EntityMetadata entity)
         {
             VisioApi.Shape rect = page.DrawRectangle(X_POS1, Y_POS1, X_POS2, Y_POS2);
-            rect.Name = entityName;
-            rect.Text = entityName + " ";
+            rect.Name = entity.LogicalName;
+            if (dbp.entityLabelDisplay == 1)
+                rect.Text = entity.DisplayName.UserLocalizedLabel.Label + " ";
+            else if (dbp.entityLabelDisplay == 2)
+                rect.Text = entity.DisplayName.UserLocalizedLabel.Label + " [" + entity.LogicalName + "] ";
+            else
+                rect.Text = entity.LogicalName + " ";
+            
 
-            //// Determine the shape fill color based on entity ownership.
-            //string fillColor;
+            // Determine the shape fill color based on entity ownership.
+            string fillColor;
 
-            //switch (ownership)
-            //{
-            //    case OwnershipTypes.BusinessOwned:
-            //        fillColor = "RGB(255,202,176)"; // Light orange
-            //        break;
-            //    case OwnershipTypes.OrganizationOwned:
-            //        fillColor = "RGB(255,255,176)"; // Light yellow
-            //        break;
-            //    case OwnershipTypes.UserOwned:
-            //        fillColor = "RGB(204,255,204)"; // Light green
-            //        break;
-            //    default:
-            //        fillColor = "RGB(255,255,255)"; // White
-            //        break;
-            //}
+            switch (entity.OwnershipType.Value)
+            {
+                case OwnershipTypes.BusinessOwned:
+                    fillColor = "RGB(255,202,176)"; // Light orange
+                    break;
+                case OwnershipTypes.OrganizationOwned:
+                    fillColor = "RGB(255,255,176)"; // Light yellow
+                    break;
+                case OwnershipTypes.UserOwned:
+                    fillColor = "RGB(204,255,204)"; // Light green
+                    break;
+                default:
+                    fillColor = "RGB(255,255,255)"; // White
+                    break;
+            }
 
             // Set the fill color, placement properties, and line weight of the shape.
             rect.get_CellsSRC(VISIO_SECTION_OJBECT_INDEX, (short)VisioApi.VisRowIndices.visRowMisc, (short)VisioApi.VisCellIndices.visLOFlags).Formula = ((int)VisioApi.VisCellVals.visLOFlagsPlacable).ToString();
-            //rect.get_CellsSRC(VISIO_SECTION_OJBECT_INDEX, (short)VisioApi.VisRowIndices.visRowFill, (short)VisioApi.VisCellIndices.visFillForegnd).Formula = fillColor;
+            if(dbp.showOwnership)
+                rect.get_CellsSRC(VISIO_SECTION_OJBECT_INDEX, (short)VisioApi.VisRowIndices.visRowFill, (short)VisioApi.VisCellIndices.visFillForegnd).FormulaU = fillColor;
+
             // Update the style of the entity name
             VisioApi.Characters characters = rect.Characters;
             characters.Begin = 0;
-            characters.End = entityName.Length;
+            characters.End = entity.LogicalName.Length;
             characters.set_CharProps((short)VisioApi.VisCellIndices.visCharacterStyle, (short)VisioApi.VisCellVals.visBold);
             characters.set_CharProps((short)VisioApi.VisCellIndices.visCharacterColor, (short)VisioApi.VisDefaultColors.visDarkBlue);
             characters.set_CharProps((short)VisioApi.VisCellIndices.visCharacterSize, NAME_CHARACTER_SIZE);
+            //set the font family of the text to segoe for the visio 2013.
+            if (VersionName == "15.0")
+                characters.set_CharProps((short)VisioApi.VisCellIndices.visCharacterFont, (short)FONT_STYLE);
+
+            _processedEntities.Add(new ProcessedEntity { entityName = entity.LogicalName, attributes = new List<string>{entity.PrimaryIdAttribute} });
+
+            //Add Primary Key attribute
+            if(dbp.showPrimaryKeys)
+            {
+                rect.get_CellsSRC(VISIO_SECTION_OJBECT_INDEX, (short)VisioApi.VisRowIndices.visRowXFormOut, (short)VisioApi.VisCellIndices.visXFormHeight).ResultIU += HEIGHT;
+                AttributeMetadata attribute = GetAttributeMetadata(entity, entity.PrimaryIdAttribute);
+                rect.Text += getAttributeValue(attribute) + "  [PK]";
+            }
 
             return rect;
         }
@@ -356,10 +384,14 @@ namespace MSCRMToolKit
         /// <param name="shapeFrom">Shape initiating the relationship</param>
         /// <param name="shapeTo">Shape referenced by the relationship</param>
         /// <param name="isManyToMany">Whether or not it is a many-to-many entity relationship</param>
-        private void DrawDirectionalDynamicConnector(VisioApi.Shape shapeFrom, VisioApi.Shape shapeTo, bool isManyToMany)
+        /// <param name="SchemaName">The relationship Shcema Name</param>
+        private void DrawDirectionalDynamicConnector(VisioApi.Shape shapeFrom, VisioApi.Shape shapeTo, bool isManyToMany, string SchemaName)
         {
             // Add a dynamic connector to the page.
             VisioApi.Shape connectorShape = shapeFrom.ContainingPage.Drop(_application.ConnectorToolDataObject, 0.0, 0.0);
+            
+            if(dbp.showRelationshipsNames)
+                connectorShape.Text = SchemaName;            
 
             // Set the connector properties, using different arrows, colors, and patterns for many-to-many relationships.
             connectorShape.get_CellsSRC(VISIO_SECTION_OJBECT_INDEX, (short)VisioApi.VisRowIndices.visRowFill, (short)VisioApi.VisCellIndices.visFillShdwPattern).ResultIU = SHDW_PATTERN;
@@ -414,5 +446,11 @@ namespace MSCRMToolKit
 
             return null;
         }
+    }
+
+    class ProcessedEntity
+    {
+        public string entityName { get; set; }
+        public List<string> attributes { get; set; }
     }
 }

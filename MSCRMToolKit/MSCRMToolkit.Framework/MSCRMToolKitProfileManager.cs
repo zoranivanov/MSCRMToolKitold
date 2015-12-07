@@ -1,7 +1,7 @@
-﻿using Microsoft.Xrm.Sdk.Client;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using System.Xml;
+using Microsoft.Xrm.Sdk.Client;
 
 namespace MSCRMToolKit
 {
