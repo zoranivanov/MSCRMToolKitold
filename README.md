@@ -1,4 +1,3 @@
-<div class="wikidoc"><strong>Project Description</strong><br>
 <p>MSCRM ToolKit is a collection of useful tools for people working on Microsoft Dynamics CRM 2011++&nbsp;projects.</p>
 <p>It is built around features described in the Microsoft Dynamics CRM Software Development Kit.</p>
 <p>In the toolkit you can find the following tools:</p>
