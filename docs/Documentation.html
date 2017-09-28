@@ -1,0 +1,512 @@
+<div class="wikidoc">
+<h1>MSCRM ToolKit - Documentation</h1>
+<ul>
+<li><a href="#projectdescription">Project Description</a> </li><li><a href="#requirements">Requirements</a> </li><li><a href="#installationinstructions">Installation Instructions</a> </li><li><a href="#gettingstarted">Getting started</a>
+<ul>
+<li><a href="#connectionsmanager">Connections Manager</a> </li><li><a href="#log">Log</a> </li></ul>
+</li><li><a href="#tools">Tools</a>
+<ul>
+<li><a href="#referencedatatransporter">Reference Data Transporter</a> </li><li><a href="#ntonassociationstransporter">N:N Associations Transporter</a> </li><li><a href="#dataexportmanager">Data Export Manager</a> </li><li><a href="#exportentitesstructure">Export Entities Structure</a> </li><li><a href="#deploymentproperties">Deployment Properties (On-Premise only)</a>
+</li><li><a href="#solutionstransporter">Solutions Transporter</a> </li><li><a href="#solutionsimportjobsviewer">Solutions Import Jobs Viewer</a> </li><li><a href="#workflowexecutionmanager">Workflow Execution Manager</a> </li><li><a href="#recordscounter">Records Counter</a> </li><li><a href="#auditexportmanager">Audit Export Manager</a> </li></ul>
+</li></ul>
+<p><a name="projectdescription"></a></p>
+<h2 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Project Description</h2>
+<p>MSCRM ToolKit is a collection of useful tools for people working on Microsoft Dynamics CRM 2011, 2013 and 2015 projects.</p>
+<p>It is built around features described in the <a href="http://www.microsoft.com/en-us/download/details.aspx?id=44567" target="new">
+Microsoft Dynamics CRM 2015 Software Development Kit.</a></p>
+<p>In the toolkit you can find the following tools:</p>
+<ul>
+<li><a href="#referencedatatransporter">Reference Data Transporter</a>
+<ul>
+<li>Tool for transporting reference data between different CRM deployments. </li></ul>
+</li><li><a href="#ntonassociationstransporter">N:N Associations Transporter</a>
+<ul>
+<li>Tool for transporting N:N associations between different CRM deployments. </li></ul>
+</li><li><a href="#dataexportmanager">Data Export Manager</a>
+<ul>
+<li>Tool for exporting data from CRM deployment. Exporting data into different formats: XML, XML Spreadsheet 2003, CSV.
+</li></ul>
+</li><li><a href="#exportentitesstructure">Export Entities Structure</a>
+<ul>
+<li>Tool for exporting the Metadata (entities, attributes, relationships and diagrams) from CRM.
+</li></ul>
+</li><li><a href="#deploymentproperties">Deployment Properties (On-Premise only)</a>
+<ul>
+<li>Tool for changing the server and deployment properties for an On-Premise CRM deployment.
+</li></ul>
+</li><li><a href="#solutionstransporter">Solutions Transporter</a>
+<ul>
+<li>Tool for transporting solutions between different CRM deployments. </li></ul>
+</li><li><a href="#solutionsimportjobsviewer">Solutions Import Jobs Viewer</a>
+<ul>
+<li>Tool for viewing the Solutions Import jobs in a CRM deployment. </li></ul>
+</li><li><a href="#workflowexecutionmanager">Workflow Execution Manager</a>
+<ul>
+<li>Tool for executing workflows on the CRM. </li></ul>
+</li><li><a href="#recordscounter">Records Counter</a>
+<ul>
+<li>Tool for counting records in the CRM deployment. </li></ul>
+</li><li><a href="#auditexportmanager">Audit Export Manager</a>
+<ul>
+<li>Tool for exporting Audit Details from the CRM. </li></ul>
+</li></ul>
+<p><a name="requirements"></a></p>
+<h2 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Requirements</h2>
+<p>The following requirements should be met prior to using MSCRM ToolKit:</p>
+<ul>
+<li><a href="http://www.microsoft.com/en-US/download/details.aspx?id=42642" target="new">Microsoft .NET Framework 4.5.2</a>
+</li><li><a href="http://www.microsoft.com/en-us/download/details.aspx?id=17331" target="new">Windows Identity Foundation Runtime</a> (for Online Deployments)
+</li></ul>
+<p><a name="installationinstructions"></a></p>
+<h2 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Installation instructions</h2>
+<ul>
+<li>Unzip the contents of zip archive to any location on your computer to use the application.
+</li></ul>
+<p><a name="gettingstarted"></a></p>
+<h2 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Getting started</h2>
+<p>To start using the application you should launch the main exe file: <strong>MSCRMToolKit.exe</strong></p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427337" alt=""></div>
+<p>The MSCRM ToolKit's main window is like a toolbar from which you can launch the different tools you want to use.You can find the following menu items on the main window:</p>
+<ul>
+<li>File
+<ul>
+<li>In this menu item you can find the sub item Exit. Use this item to exit the application
+</li></ul>
+</li><li>Connections Manager
+<ul>
+<li>Use this item to manage the connections to the different Microsoft Dynamics CRM 2011/2013/2015 deployments you want to work on.
+</li></ul>
+</li><li>Tools
+<ul>
+<li>Use this item's sub items to access and launch the different tools you want to work with.
+</li></ul>
+</li><li>Log
+<ul>
+<li>Use this item's sub items to view the current log file and to open the log archive.
+</li></ul>
+</li><li>Help
+<ul>
+<li>Use this item open this page into Internet Explorer. </li></ul>
+</li></ul>
+<p>The first thing to do when using the ToolKit is creating a connection to a CRM deployment:</p>
+<p><a name="connectionsmanager"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Connections Manager</h3>
+<p>When launching the Connections Manager for the first time you can start creating a new connection.</p>
+<div style="text-align:center"><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=mscrmtoolkit&DownloadId=777505" alt=""></div>
+<p>Tips for creating a new connection:</p>
+<ol>
+<li>The Connection Name cannot contain spaces or specific characters because this value will be used to create files and folders.
+</li><li>In the Server Address you should copy / paste the URL of the CRM deployment without the &quot;main.aspx&quot; in the end. These are examples of how the address should look like:
+<ul>
+<li>On-Premise: http://myserver/myorg/ </li><li>IFD Claims-based internal access: https://internalcrm.mydomain.com/myorg/ </li><li>IFD Claims-based external access: https://myorg.mydomain.com/ </li><li>On-Line: https://myorg.crm.dynamics.com/ </li></ul>
+</li><li>The Organization Name for the online deployments is the name in the URL and not the unique name in the Developer Resources page.
+</li><li>For On-Premise deployments you can use the Default Credentials of the logged user.
+</li><li>The default Timeout is 2 minutes. You may set a bigger value here if you get the following error in some of the tools:<em>The request channel timed out while waiting for a reply after 00:01:59.9969973. Increase the timeout value passed to the call to Request
+ or increase the SendTimeout value on the Binding. The time allotted to this operation may have been a portion of a longer timeout.</em>
+</li></ol>
+<p><strong>Security considerations:</strong><br>
+The connection information is saved into the &quot;MSCRMConnections.xml&quot; file in the application folder. Although the passwords are encrypted before saving make sure to limit the access to the computer on which the application is installed.</p>
+<p>After providing all the information about the connection you can Save it.<br>
+You can find the saved connection in the Connections combo box between the other connections you already created. Using this combo box you can navigate through the different connections and modify them.<br>
+Finally you can &quot;Test&quot; the connection to verify that all is well. If the test passes you can close the Connections manager and use the newly created connection in the different tools.</p>
+<div style="text-align:center"><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=mscrmtoolkit&DownloadId=777506" alt=""></div>
+<p><a name="log"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Log</h3>
+<p>Most of the actions in the application will generate logs. The logs are written in files in the &quot;log&quot; folder. The log folder can be found in the application installation folder.<br>
+The log is automatically archived in monthly intervals.<br>
+You can use the Log menu in the main window and in the different tools to consult the current log file or to navigate through the archived log files.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427338" alt=""></div>
+<p><a name="tools"></a></p>
+<h2 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Tools</h2>
+<p><a name="referencedatatransporter"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Reference Data Transporter</h3>
+<p>The Reference Data Transporter can be used for transporting data between CRM deployments.<br>
+When use the Reference Data Transporter:</p>
+<ul>
+<li>If you need to synchronize reference data between different project environments: Development, Test, Production ...
+</li><li>If you need to export reference data recreate the environment and reimport the data.
+</li><li>Schedule data synchronization between different project environments. </li><li>... </li></ul>
+<p>The Reference Data Transporter will execute a predefined Transportation Profile to perform the transportation operations. A Transportation Profile is defined by the following properties:</p>
+<ol>
+<li>Profile Name: The unique name of the Transportation Profile used as parameter when scheduling the Profile execution.
+</li><li>Operation:
+<ul>
+<li><strong>Export Data</strong>: When selected the execution of the profile will download the records of the selected entities from the source environment.
+</li><li><strong>Import Data</strong>: When selected the execution of the profile will upload the previously downloaded data into the target environment
+</li><li><strong>Transport Data</strong>: When selected the execution of the profile will transport (download and the upload) the records of the selected entities in to the respective environments.
+</li></ul>
+</li><li>Source: The connection from which the data will be downloaded. </li><li>Target: The connection in which the data will be uploaded. </li><li>Import Mode:
+<ul>
+<li><strong>Create</strong>: When selected the execution of the profile will only attempt creation of the records during the upload into the target environment. If the record already exists into the target environment the creation attempt will fail.
+</li><li><strong>Create or Update</strong>: When selected the execution of the profile will attempt creation of the records during the upload into the target environment. If the record already exists into the target environment the record will be updated.
+</li><li><strong>Update</strong>: When selected the execution of the profile will only attempt update of the records during the upload into the target environment. If the record doesn&rsquo;t exists into the target environment the record the update attempt will
+ fail. </li></ul>
+</li><li>Selected entities: List of entities to be transported.
+<ul>
+<li>The entities transport will be performed into the defined order. </li><li>For each entity by default all attributes from all records will be transported.<br>
+Each entity provides a filtering possibility using FetchXML to filter the records used into the transport.<br>
+Each entity provides a attributes selection possibility to eliminate the attributes you don't want to transport.
+</li></ul>
+</li><li>Records Mapping: List of Records mappings. These mappings can be used to map a record from the Source deployment to the Target deployment in the Lookup attributes.
+<ul>
+<li><em>Example:</em><br>
+The default transaction currency is automatically created on each new environment with a different ID. So transporting an entity containing a currency attribute from one environment to another will fail because the respective lookup attribute cannot be imported.
+ Here you can use the Records Mapping and map the &quot;transactioncurrency&quot; entity with the Source Record Id and the Target Record Id. after doing this the transport will succeed.
+</li></ul>
+</li></ol>
+<p>&nbsp;</p>
+<h4>Creating a new Transportation Profile</h4>
+<p>Provide all the necessary information for the Transportation Profile and Save it using the menu item File =&gt; Save or the keyboard shortcuts (Ctrl&#43;S).<br>
+<br>
+<strong>Entities selection tips</strong>: <br>
+When creating a Profile for a selected source connection for the first time you need to &quot;Load the Source Structure&quot; to be able to select the available entities. Once the Source structure is loaded it can be reused at will in any Profile. Make sure you Reload
+ the structure if the CRM customization changes.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427346" alt=""></div>
+<p>The Transportation Order is important to respect the entities dependencies.<br>
+Example: The Contact entity depends of the Account entity. So you need to import the Account entity before the Contact entity.</p>
+<p><strong>Selected entities details</strong><br>
+Use the &quot;...&quot; button next to each selected entity to setup the selected attributes details and the records filter.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=438212" alt=""></div>
+<p>By default all the attributes of the entity are selected for transport. You can un-check the attributes you don't want to transport.
+<strong>Setting up a records filter:</strong><br>
+You can filter the download records from the source environment using FetchXML query filter. You should use the &quot;Advanced Find&quot; feature in the CRM to generate the FetchXMl query and extract the filter.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427335" alt=""></div>
+<p>Open the downloaded FetchXML query into your favorite XML editor (Notepad&#43;&#43;, Notepad or else), copy the filter section from the query and paste it into the Filter editor:</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427336" alt=""></div>
+<p><br>
+<br>
+<strong>Records Mapping</strong>: <br>
+Click on the Records Mapping button to open the Records Mapping wizard. Add a new Record Mapping, select the &quot;transactioncurrency&quot; entity; set the default currency Id form the Source deployment; set the default currency Id form the Target deployment :</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=747582" alt=""></div>
+<h4>Running a Transportation Profile</h4>
+<p>Press the Run Profile button to run the current profile.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427344" alt=""></div>
+<p>You have the possibility to stop the execution of the transport.<br>
+When the profile execution is over you can view the report of the execution by clicking the button &quot;Transport Report&quot;:</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427349" alt=""></div>
+<p>If there are import failures during the profile execution the button &quot;Failures Report&quot; will be visible. By clicking on this button you can open and see the failures details in Excel:</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427348" alt=""></div>
+<h4>Scheduling a Transportation Profile</h4>
+<p>Another way of executing a Transportation Profile is by using the respective Command Line tool:
+<strong>&quot;MSCRMReferenceDataTransporterCMD.exe&quot;</strong> which can be found in the application install folder. Launching the command line tool without arguments will list the created Transportation Profiles and wait for a profile selection to run it. Another
+ option is to provide the Profile name as an argument to run it directly.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427342" alt=""></div>
+<p>After having created a Transportation Profile you can schedule it for execution using the Windows task scheduler. Make sure to provide the Profile Name as an argument in the scheduled task.</p>
+<p>The content of the profiles is stocked in the folder &quot;ReferenceDataTransporter&quot; in the application install folder. For each Profile you will find the Profile folder named by the Profile Name. In it you there are 2 folders:</p>
+<ol>
+<li><strong>Data:</strong> containing the Data of all the exported entities of the profile.
+</li><li><strong>ExecutionReports:</strong> containing the execution reports of the profile.
+</li></ol>
+<p>You can use the &quot;Reference Data Transport Report Viewer&quot; to view the execution reports.</p>
+<p>&nbsp;</p>
+<p><a name="ntonassociationstransporter"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">N:N Associations Transporter</h3>
+<p>The N:N Associations Transporter can be used for transporting N:N Associations between different deployments.<br>
+When use the N:N Associations Transporter:</p>
+<ul>
+<li>If you need to synchronize N:N Associations between different project environments: Development, Test, Production ...
+</li><li>If you need to export N:N Associations recreate the environment and reimport the data.
+</li><li>Schedule N:N Associations synchronization between different project environments.
+</li><li>... </li></ul>
+<p>The N:N Associations Transporter will execute a predefined N:N Transport Profile to perform the transportation operations. A N:N Transport Profile is defined by the following properties:</p>
+<ol>
+<li>Profile Name: The unique name of the N:N Transport Profile used as parameter when scheduling the Profile execution.
+</li><li>Operation:
+<ul>
+<li><strong>Export Data</strong>: When selected the execution of the profile will download the records of the selected N:N Relationships from the source environment.
+</li><li><strong>Import Data</strong>: When selected the execution of the profile will upload the previously downloaded data into the target environment
+</li><li><strong>Transport Data</strong>: When selected the execution of the profile will transport (download and the upload) the records of the selected N:N Relationships in to the respective environments.
+</li></ul>
+</li><li>Source: The connection from which the data will be downloaded. </li><li>Target: The connection in which the data will be uploaded. </li><li>Selected N:N Relationships: List of N:N Relationships for which the Associations will be transported.
+</li></ol>
+<p><em><strong>Important Note:</strong></em><br>
+<em>You may want to run the N:N Associations Transporter after the Reference Data Transporter for it to work well. The Reference Data Transporter will ensure that you have the same IDs for the records on both Source and Target Environments.
+</em></p>
+<p>&nbsp;</p>
+<h4>Creating a new N:N Transport Profile</h4>
+<p>Provide all the necessary information for the N:N Transport Profile and Save it using the menu item File =&gt; Save or the keyboard shortcuts (Ctrl&#43;S).<br>
+<br>
+<strong>N:N Relationships selection tips</strong>: <br>
+When creating a Profile for a selected source connection for the first time you need to &quot;Load the Source Structure&quot; to be able to select the available N:N Relationships. Once the Source structure is loaded it can be reused at will in any Profile. Make sure
+ you Reload the structure if the CRM customization changes.</p>
+<div style="text-align:center"><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=mscrmtoolkit&DownloadId=777502" alt=""></div>
+<h4>Running a N:N Transport Profile</h4>
+<p>Press the Run Profile button to run the current profile.</p>
+<div style="text-align:center"><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=mscrmtoolkit&DownloadId=777501" alt=""></div>
+<p>You have the possibility to stop the execution of the transport.<br>
+When the profile execution is over you can view the report of the execution by clicking the button &quot;Transport Report&quot;:</p>
+<div style="text-align:center"><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=mscrmtoolkit&DownloadId=777503" alt=""></div>
+<p>If there are import failures during the profile execution the button &quot;Failures Report&quot; will be visible. By clicking on this button you can open and see the failures details in Excel:</p>
+<div style="text-align:center"><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=mscrmtoolkit&DownloadId=777504" alt=""></div>
+<h4>Scheduling a N:N Transport Profile</h4>
+<p>Another way of executing a N:N Transport Profile is by using the respective Command Line tool:
+<strong>&quot;MSCRMNtoNAssociationsTransportManagerCMD.exe&quot;</strong> which can be found in the application install folder. Launching the command line tool without arguments will list the created N:N Transport Profiles and wait for a profile selection to run it.
+ Another option is to provide the Profile name as an argument to run it directly.<br>
+After having created a N:N Transport Profile you can schedule it for execution using the Windows task scheduler. Make sure to provide the Profile Name as an argument in the scheduled task.</p>
+<p>The content of the profiles is stocked in the folder &quot;NtoNAssociationsTransporter&quot; in the application install folder. For each Profile you will find the Profile folder named by the Profile Name. In it you there are 2 folders:</p>
+<ol>
+<li><strong>Data:</strong> containing the Data of all the exported N:N Associations data of the profile.
+</li><li><strong>ExecutionReports:</strong> containing the execution reports of the profile.
+</li></ol>
+<p>You can use the &quot;N:N Transport Report Viewer&quot; to view the execution reports.</p>
+<p>&nbsp;</p>
+<p><a name="dataexportmanager"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Data Export Manager</h3>
+<p>The Data Export Manager can be used for exporting data from a CRM deployment.<br>
+When use the Data Export Manager:</p>
+<ul>
+<li>If you need to export data from a CRM environment in some of the following formats:
+<ul>
+<li>XML </li><li>XML Spreadsheet 2003 </li><li>CSV </li></ul>
+</li></ul>
+<p>The Data Export Manager will execute a predefined Data Export Profile to perform the export operation. A Data Export Profile is defined by the following properties:</p>
+<ol>
+<li>Profile Name: The unique name of the Data Export Profile used as parameter when selecting the Profile in the Data Export Manager or when scheduling the Profile execution.
+</li><li>Source: The connection from which the data will be downloaded. </li><li>Export Format:
+<ul>
+<li><strong>XML</strong>: The data will be exported into XML format. The exported file can be opened in Excel.
+</li><li><strong>XML Spreadsheet 2003</strong>: The data will be exported into the XML Spreadsheet 2003 format.
+</li><li><strong>CSV</strong>: The data will be exported into the CSV format. </li></ul>
+</li><li>Encoding:
+<ul>
+<li>Default. </li><li>UTF8 </li><li>Unicode </li><li>ASCII </li><li>BigEndianUnicode </li></ul>
+</li><li>FetchXML query to use for the data export. </li></ol>
+<p>&nbsp;</p>
+<h4>Creating a new Data Export Profile</h4>
+<p>Provide all the necessary information for the Data Export Profile and Save it using the menu item File =&gt; Save or the keyboard shortcuts (Ctrl&#43;S).</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=423818" alt=""></div>
+<p><strong>Creating the FetchXML query:</strong><br>
+You should use the &quot;Advanced Find&quot; feature in the CRM to generate the FetchXMl query:</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427335" alt=""></div>
+<p>Open the downloaded FetchXML query into your favorite XML editor (Notepad&#43;&#43;, Notepad or else), copy the entire FetchXML query from the query and paste it into the Query editor:</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=438213" alt=""></div>
+<h4>Running a Data Export Profile</h4>
+<p>Press the Run Profile button to run the current profile. When the profile execution is over you can view the report of the execution by clicking the button &quot;Data Export Report&quot;:</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=423821" alt=""></div>
+<h4>Scheduling a Data Export Profile</h4>
+<p>Another way of executing a Data Export Profile is by using the respective Command Line tool:
+<strong>&quot;MSCRMDataExportManagerCMD.exe&quot;</strong> which can be found in the application install folder. Launching the command line tool without arguments will list the created Data Export Profiles and wait for a profile selection to run it. Another option is
+ to provide the Profile name as an argument to run it directly.<br>
+After having created a Data Export Profile you can schedule it for execution using the Windows task scheduler. Make sure to provide the Profile Name as an argument in the scheduled task.</p>
+<p>The content of the profiles is stocked in the folder &quot;DataExportManager&quot; in the application install folder. For each Profile you will find the Profile folder named by the Profile Name. In it you there are 2 folders:</p>
+<ol>
+<li><strong>Data:</strong> containing the Data of all the exported data of the profile.
+</li><li><strong>ExecutionReports:</strong> containing the execution reports of the profile.
+</li></ol>
+<p>You can use the &quot;Data Export Report Viewer&quot; to view the execution reports.</p>
+<p>&nbsp;</p>
+<p><a name="exportentitesstructure"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Export Entities Structure</h3>
+<p>The Export Entities Structure tool can be used to export the MetaData structure of the CRM:</p>
+<ul>
+<li>Entities Metadata </li><li>Attributes Metadata </li><li>Relationships Metadata </li><li>Entities Diagrams </li></ul>
+<p><strong>Entities Diagrams generation Prerequisites:</strong><br>
+To use the Entities Diagrams generation tool you must have Microsoft Visio 2010 or a more resent version installed on the machine running the MSCRM ToolKit.<br>
+<br>
+You have to download the Metadata from the CRM before exporting the structure.<br>
+Select the connection from which you want to download the Metadata and press the &quot;Load entities from Source&quot; button. When the download is finished the entities will be displayed in the Checkbox list.</p>
+<p>&nbsp;</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=1429741" alt=""></div>
+<p>&nbsp;</p>
+<ol>
+<li><strong>Entities and Attributes structure export:</strong><br>
+Select the entities you want to export.<br>
+Check the Metadata parameters you want to export.<br>
+Press the &quot;Export Structure&quot; button. </li><li><strong>Relationships export:</strong><br>
+Select the entities for which you want to export the relationships.<br>
+Press the &quot;Relationships&quot; button. </li><li><strong>Entities Diagram export:</strong><br>
+Select the entities for which you want to export the Relationhips Diagram.<br>
+Set the Diagram Generation Properties.<br>
+Press the &quot;Generate Diagram&quot; button. </li><li><strong>Fields on Forms Export:</strong><br>
+Select one entity for which you want to export the the Attributes on Forms distribution.<br>
+Press the &quot;Fields on Forms&quot; button. This will generate an Excel file with the lines representing the Entity attributes and columns representing the Entity forms. For each Attribute and Form there will be a flag (TRUE|FALSE) if the Attribute is placed on the
+ form or not. </li></ol>
+<p>The Entities, Attributes and N*N relationships will be generated in a XML files which you can open in Excel.<br>
+The Diagrams can be opened in Microsoft Visio.</p>
+<p>&nbsp;</p>
+<p><strong>Use case 1</strong><br>
+<strong>Request:</strong><br>
+Get all the audited fields in the CRM.<br>
+<strong>How-To:</strong><br>
+<em><strong>Definition:</strong> One field is audited if: The field is Audit enabled, it's parent entity is Audit enabled and the Global Audit is enabled.</em> For this example we shell assume that the Global Audit is enabled.<br>
+Step 1: Download the CRM structure.<br>
+Step 2: Select all entities<br>
+Step 3: Select the following metadata attributes for export:</p>
+<ul>
+<li>Entity Logical Name </li><li>Entity Is Audit Enabled </li><li>Attribute Logical Name </li><li>Attribute Is Audit Enabled </li></ul>
+<p>Step 4: Export the Structure<br>
+Step 5: Open the Exported file in Excel<br>
+Step 6: Filter the 2 columns <strong>EntityIsAuditEnabled</strong> and <strong>AttributeIsAuditEnabled</strong> to display only the &quot;True&quot; value.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=461502" alt=""></div>
+<p><br>
+This will give you all the audited fields in the CRM<br>
+<br>
+<strong>Use case 2</strong><br>
+<strong>Request:</strong><br>
+Generate a relationship diagram for the entities: Account, Contact, Lead and Opportunity.<br>
+<strong>How-To:</strong><br>
+Step 1: Download the CRM structure.<br>
+Step 2: Select the 4 entities<br>
+Step 4: Generate the relationship diagram<br>
+Step 5: Open the generated diagram in Visio</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=461506" alt=""></div>
+<p><br>
+This will give you the relationship diagram for the 4 entities</p>
+<p>&nbsp;</p>
+<p><a name="deploymentproperties"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Deployment Properties (On-Premise only)</h3>
+<p>This tool can be used to modify the Deployment and Server properties of a Microsoft Dynamics CRM 2011/2013/2015 On-Premise deployment.<br>
+You should modify these values only if asked by Microsoft Dynamics CRM support engineer.<br>
+For more information visit: <a href="http://msdn.microsoft.com/en-us/library/gg328128" target="new">
+http://msdn.microsoft.com/en-us/library/gg328128</a></p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427331" alt=""></div>
+<p><a name="solutionsexportmanager"></a><a name="solutionstransporter"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Solutions Transporter</h3>
+<p>The Solutions Transporter can be used for transporting solutions between CRM deployments.<br>
+When use the Solutions Export Manager:</p>
+<ul>
+<li>If you need to transport (export from source and import in target) solutions between CRM deployments.
+</li><li>If you need to export solutions from a CRM deployments for backup purposes. </li><li>If you need to schedule regular execution of the solutions transport. </li></ul>
+<p>The Solutions Transporter will execute a predefined Solutions Transport Profile to perform the operation. A Solutions Transport Profile is defined by the following properties:</p>
+<ol>
+<li>Profile Name: The unique name of the Solutions Transport Profile used as parameter when selecting the Profile in the Solutions Transporter or when scheduling the Profile execution.
+</li><li>Operation: The operation to be executed.
+<ul>
+<li>Export Solutions: Export the selected solutions from the source deployment </li><li>Import Solutions: Import previously exported solutions into the target deployment
+</li><li>Transport Solutions: Export the selected solutions from the source deployment and Import them into the target deployment
+</li></ul>
+</li><li>Source Connection: The connection from which the solution will be exported. </li><li>Export Folder: Folder on the local machine where the solutions archives will be exported.
+</li><li>Selected solutions for transport. </li><li>Export Solutions as Managed: If checked the solutions will be exported as managed
+</li><li>Publish All Customizations (before export): Publish All Customizations on the source deployment before exporting the selected solutions
+</li><li>Settings:
+<ul>
+<li>AutoNumbering: Export the Auto Numbering settings with the solutions. </li><li>Calendar: Export the Calendar settings with the solutions. </li><li>Customization: Export the Customization settings with the solutions. </li><li>EmailTracking: Export the Email Tracking settings with the solutions. </li><li>General: Export the General settings with the solutions. </li><li>Marketing: Export the Marketing settings with the solutions. </li><li>OutlookSynchronization: Export the Outlook Synchronization settings with the solutions.
+</li><li>RelationshipRoles: Export the Relationship Roles settings with the solutions.
+</li><li>IsvConfig: Export the Isv Config settings with the solutions. </li></ul>
+</li><li>Target Connection: The connection in which the solution will be imported. </li><li>Solutions to Import
+<ul>
+<li>Newest: Import the most recently exported solution archives found in the Export Folder
+</li><li>Oldest: Import the most remotley exported solution archives found in the Export Folder
+</li><li>[Specific Date]: Import the exported solution archives from a specific date found in the Export Folder
+</li></ul>
+</li><li>Publish All Customizations (after import): Publish All Customizations on the target deployment after importing the selected solutions
+</li><li>Activate processes and plugins: Activate processes and plugins on the target deployment after importing the selected solutions
+</li><li>Overwrite Unmanaged Customizations: Overwrite Unmanaged Customizations on the target deployment when importing the selected solutions
+</li></ol>
+<h4>Creating a new Solutions Transport Profile</h4>
+<p>Provide all the necessary information for the Solutions Transport Profile and Save it using the menu item File =&gt; Save or the keyboard shortcuts (Ctrl&#43;S).<br>
+<br>
+Load the list of solutions from the source deployment for selection.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=811039" alt=""></div>
+<h4>Running a Solutions Transport Profile</h4>
+<p>Press the Run Profile button to run the current profile.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=811040" alt=""></div>
+<p>Hints:</p>
+<ul>
+<li>You have the possibility to stop the transport by pressing the <strong>Stop Transport</strong> button
+</li><li>After the solutions import is done you can use the Import logs menu item to open in Excel the Solutions Import Logs
+</li></ul>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=811041" alt=""></div>
+<h4>Scheduling a Solutions Transport Profile</h4>
+<p>Another way of executing a Solutions Transport Profile is by using the respective Command Line tool:
+<strong>&quot;MSCRMSolutionsTransporterCMD.exe&quot;</strong> which can be found in the application install folder. Launching the command line tool without arguments will list the created Solutions Transport Profiles and wait for a profile selection to run it. Another
+ option is to provide the Profile name as an argument to run it directly.<br>
+After having created a Solutions Transport Profile you can schedule it for execution using the Windows task scheduler. Make sure to provide the Profile Name as an argument in the scheduled task.</p>
+<p>The content of the profiles is stocked in the folder &quot;SolutionsTransporter&quot; in the application install folder.<br>
+The ZIP archives are named by the solution name and the export Date as a suffix.</p>
+<p><a name="solutionsimportjobsviewer"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Solutions Import Jobs Viewer</h3>
+<p>The Solutions Import Jobs Viewer can be used for:</p>
+<ul>
+<li>Viewing the state of the Solutions Import Jobs on a CRM deployment. </li><li>Downloading the Import log files for finished Solutions Import Jobs. </li></ul>
+<p>To load the list of the Solutions Import Jobs:</p>
+<ol>
+<li>Select an existing <strong>Connection</strong> </li><li>Press the <strong>Load Solutions Import Jobs</strong> button </li></ol>
+<p>Hints:</p>
+<ul>
+<li>You can reload the list of solution import jobs at will to refresh the list </li><li>Only the 5000 newest Solution Import Jobs are loaded. </li><li>Use the <strong>Download log</strong> button on each line to download the Import log file and open it in Excel.
+</li><li>The downloaded Import log files are storred in the <strong>SolutionsImportJobsViewer</strong> folder
+</li></ul>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=810995" alt=""></div>
+<p><a name="workflowexecutionmanager"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Workflow Execution Manager</h3>
+<p>The Workflow Execution Manager can be used for executing workflows on a CRM deployment.
+<br>
+When use the Workflow Execution Manager:</p>
+<ul>
+<li>If you need to schedule the execution of Workflows for a selection of records on a CRM deployment.
+</li></ul>
+<p>The Workflow Execution Manager will execute a predefined Workflow Execution Profile to perform the export operation. A Workflow Execution Profile is defined by the following properties:</p>
+<ol>
+<li>Profile Name: The unique name of the Workflow Execution Profile used as parameter when selecting the Profile in the Workflow Execution Manager or when scheduling the Profile execution.
+</li><li>Source: The connection on which the workflows will be executed. </li><li>Selected workflow for execution. </li><li>FetchXML query to use for the records on which the workflow will be executed .
+</li></ol>
+<p>&nbsp;</p>
+<h4>Creating a new Workflow Execution Profile</h4>
+<p>Provide all the necessary information for the Workflow Execution Profile and Save it using the menu item File =&gt; Save or the keyboard shortcuts (Ctrl&#43;S).<br>
+<br>
+Select the connection on which you will execute the workflows.<br>
+Download the list of workflows for selection.<br>
+The list of workflows will contain all the workflows visible by your user account and for which the option &quot;Available for execution on demand&quot; is checked.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=427350" alt=""></div>
+<h4>Running a Workflow Execution Profile</h4>
+<p>Press the Run Profile button to run the current profile.</p>
+<h4>Scheduling a Workflow Execution Profile</h4>
+<p>Another way of executing a Workflow Execution Profile is by using the respective Command Line tool:
+<strong>&quot;MSCRMWorkflowExecutionManagerCMD.exe&quot;</strong> which can be found in the application install folder. Launching the command line tool without arguments will list the created Workflow Execution Profiles and wait for a profile selection to run it. Another
+ option is to provide the Profile name as an argument to run it directly.<br>
+After having created a Workflow Execution Profile you can schedule it for execution using the Windows task scheduler. Make sure to provide the Profile Name as an argument in the scheduled task.</p>
+<p><a name="recordscounter"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Records Counter</h3>
+<p>This tool can be used to count the records in the different entities. This can be useful for online deployments for entities having more than 5000 records.</p>
+<ol>
+<li>Load the CRM structure. </li><li>Select the entities for which you want to get the records number </li><li>For each Entity you can provide a filter for the records you want to count using the &quot;...&quot; button.
+</li><li>Press the &quot;Get Records Number&quot; button to generate a XML file (can be opened in Excel) of the entities with the respective records number.
+</li></ol>
+<p>&nbsp;</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=534149" alt=""></div>
+<p><a name="auditexportmanager"></a></p>
+<h3 style="border-top:1px solid #7E8998; border-bottom:1px solid #7E8998">Audit Export Manager</h3>
+<p>This tool can be used to export Audit details form the CRM.</p>
+<p>The Audit Export Manager will execute a predefined Audit Export Profile to perform the export operation. An Audit Export Profile is defined by the following properties:</p>
+<ol>
+<li>Profile Name: The unique name of the Audit Export Profile used as parameter when selecting the Profile in the Audit Export Manager or when scheduling the Profile execution.
+</li><li>Source: The connection from which the Audit details will be exported. </li><li>Audit Type:
+<ul>
+<li>Audit Summary View: Same View as in the Settings =&gt; Audit </li><li>Record Change History: Same View as in the Record =&gt; Audit History </li><li>Attribute Change History: Same View as in the Record Filtered by an Attribute =&gt; Audit History
+</li><li>User Acces Audit: Same View as in the Settings =&gt; Audit but filtered on the User Access Actions / Operations
+</li></ul>
+</li><li>Export Format:
+<ul>
+<li>CSV </li><li>XML </li><li>XML Spreadsheet 2003 </li></ul>
+</li><li>Encoding:
+<ul>
+<li>Default </li><li>UTF8 </li><li>Unicode </li><li>ASCII </li><li>BigEndianUnicode </li></ul>
+</li><li>Audit Date filter:
+<ul>
+<li>Between Dates </li><li>Last X Days </li><li>Last X Months </li><li>Last X Years </li></ul>
+</li><li>Actions Filter: List of all Actions in the CRM which can trigger an Audit creation. Only selected Actions will be taken in account for the Audit Export
+</li><li>Operations Filter: List of all Operations in the CRM which can trigger an Audit creation. Only selected Operations will be taken in account for the Audit Export
+</li><li>Users Filter: List of all Users in the CRM. Only selected Users will be taken in account for the Audit Export
+</li><li>Entities Filter: List of all Audit enabled Entities in the CRM. Only selected Entities will be taken in account for the Audit Export
+</li></ol>
+<p>&nbsp;</p>
+<h4>Creating a new Audit Export Profile</h4>
+<p>Provide all the necessary information for the Audit Export Profile and Save it using the menu item File =&gt; Save or the keyboard shortcuts (Ctrl&#43;S).<br>
+<br>
+Select the Source connection from which you will export the Audit details<br>
+Download the Source structure.<br>
+The lists of Actions, Operations, Users, Entities will automatically be filled in.
+<br>
+Select the Audit Type. Depending on the selected Audit Type, the Action, Operation, Users, Entities lists will be Enabled.<br>
+The selection of the Encoding is important for the specific language export. The date filter is optional but recommended to avoid downloading a huge amount of data.</p>
+<div style="text-align:center"><img src="http://www.codeplex.com/Download?ProjectName=mscrmtoolkit&DownloadId=534148" alt=""></div>
+<h4>Running an Audit Export Profile</h4>
+<p>Press the Run Profile button to run the current profile.<br>
+When the running is finished a new button sill appear on the Interface inviting the user to open in Excel the exported data.</p>
+<h4>Scheduling an Audit Export Profile</h4>
+<p>Another way of executing a Audit Export Profile is by using the respective Command Line tool:
+<strong>&quot;MSCRMAuditExportManagerCMD.exe&quot;</strong> which can be found in the application install folder. Launching the command line tool without arguments will list the created Audit Export Profiles and wait for a profile selection to run it. Another option
+ is to provide the Profile name as an argument to run it directly.<br>
+After having created a Audit Export Profile you can schedule it for execution using the Windows task scheduler. Make sure to provide the Profile Name as an argument in the scheduled task.</p>
+</div><div class="ClearBoth"></div>
