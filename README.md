@@ -5,37 +5,37 @@
 </div>
 <div class="wikidoc"><img src="https://github.com/zoranivanov/MSCRMToolKit/blob/master/docs/Home_home2.png" alt="">
 <ul>
-<li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#referencedatatransporter">Reference Data Transporter</a>
+<li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#referencedatatransporter">Reference Data Transporter</a>
 <ul>
 <li>Tool for transporting reference data between different CRM deployments. </li></ul>
-</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#ntonassociationstransporter">N:N Associations Transporter</a>
+</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#ntonassociationstransporter">N:N Associations Transporter</a>
 <ul>
 <li>Tool for transporting N:N associations between different CRM deployments. </li></ul>
-</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#dataexportmanager">Data Export Manager</a>
+</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#dataexportmanager">Data Export Manager</a>
 <ul>
 <li>Tool for exporting data from CRM deployment. Exporting data into different formats: XML, XML Spreadsheet 2003, CSV.
 </li></ul>
-</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#exportentitesstructure">Export Entities Structure</a>
+</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#exportentitesstructure">Export Entities Structure</a>
 <ul>
 <li>Tool for exporting the Metadata (entities, attributes, relationships and diagrams) from CRM.
 </li></ul>
-</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#deploymentproperties">Deployment Properties (On-Premise only)</a>
+</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#deploymentproperties">Deployment Properties (On-Premise only)</a>
 <ul>
 <li>Tool for changing the server and deployment properties for an On-Premise CRM deployment.
 </li></ul>
-</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#solutionstransporter">Solutions Transporter</a>
+</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#solutionstransporter">Solutions Transporter</a>
 <ul>
 <li>Tool for transporting solutions between different CRM deployments. </li></ul>
-</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#solutionsimportjobsviewer">Solutions Import Jobs Viewer</a>
+</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#solutionsimportjobsviewer">Solutions Import Jobs Viewer</a>
 <ul>
 <li>Tool for viewing the Solutions Import jobs in a CRM deployment. </li></ul>
-</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#workflowexecutionmanager">Workflow Execution Manager</a>
+</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#workflowexecutionmanager">Workflow Execution Manager</a>
 <ul>
 <li>Tool for executing workflows on the CRM. </li></ul>
-</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#recordscounter">Records Counter</a>
+</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#recordscounter">Records Counter</a>
 <ul>
 <li>Tool for counting records in the CRM deployment. </li></ul>
-</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki/MSCRM-ToolKit---Documentation#auditexportmanager">Audit Export Manager</a>
+</li><li><a href="https://github.com/zoranivanov/MSCRMToolKit/wiki#auditexportmanager">Audit Export Manager</a>
 <ul>
 <li>Tool for exporting Record Audit Details and User Access Audit from the CRM. </li></ul>
 </li></ul>
